@@ -1,0 +1,25 @@
+.emptyState{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .content{
+    text-align: center;
+    .title{
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 32px;
+      margin: 0 0 10px;
+    }
+    .subTitle{
+      margin: 10px 0 30px;
+      color: gray;
+    }
+  }
+}
+
+.labels{
+  background: -webkit-linear-gradient(#e37139, #e39260);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}

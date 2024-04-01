@@ -1,0 +1,215 @@
+.containerFull{
+  background: rgb(227,113,57);
+  background: linear-gradient(90deg, rgba(227,113,57,1) 0%, rgba(231,143,63,1) 49%, rgba(236,180,70,1) 100%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container{
+    width: 900px;
+    height: 750px;
+    background-color: white;
+    border-radius: 12px;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    .left{
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #120d05;
+      .containerTitle{
+        width: 78%;
+        font-size: 22px;
+        background: -webkit-linear-gradient(#e37139, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+    .carrusel{
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      .steps{
+        width: 100%;
+        height: calc(100% - 150px);
+        display: flex;
+        position: relative;
+        transition: 0.2s;
+        .step{
+          width: 100%;
+          height: 100%;
+          color: black;
+          padding: 45px;
+          box-sizing: border-box;
+          .wrapControl{
+            width: 100%;
+            height: 70px;
+            margin-bottom: 20px;
+          }
+        }
+      }
+      .fancyFile{
+        display: none;
+        width: 100%;
+        height: 48px;
+      }
+      .fancyFile + label{
+        display: flex;
+        width: 100%;
+      }
+      .fancyFileName{
+        background-color: #EEE;
+        border: 1px solid #CACACA;
+        flex: 1;
+        border-radius: 4px 0 0 4px;
+      }
+      .fancyFileName span{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 220px;
+        display: block;
+        font-size: 14px;
+        padding: 5px 0 0 5px;
+      }
+      .fancyFileButton{
+        background: orangered url(/images/folder.png) 4px center/25px;
+        background-repeat: no-repeat;
+        border: 1px solid orange;
+        padding: 5px;
+        color: white;
+        white-space: nowrap;
+        border-radius: 0 4px 4px 0;
+        padding-left: 34px;
+        font-size: 14px;
+      }
+      .controlSteps{
+        width: 100%;
+        height: 150px;
+        padding: 20px;
+        box-sizing: border-box;
+        .bullets{
+          width: 100%;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 10px;
+          .bullet{
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            background-color: rgb(194, 194, 194);
+            border-radius: 50%;
+            margin-right: 8px;
+            transition: 0.3s;
+          }
+          .bullet.active{
+            background-color: orange;
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+    .right{
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      .controls{
+        width: 350px;
+        height: 600px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        display: none;
+        .middleControls{
+          width: 100%;
+          height: 60px;
+          margin: 16px 0;
+          display: flex;
+          .leftControl{
+            width: 50%;
+            padding-right: 5px;
+            height: 60px;
+          }
+          .rightControl{
+            width: 50%;
+            padding-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.error{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  .containerError{
+    width: 500px;
+    height: 300px;
+    background-color: white;
+    border-radius: 10px;
+    background: rgb(227,113,57);
+    background: linear-gradient(90deg, rgba(227,113,57,1) 0%, rgba(231,143,63,1) 49%, rgba(236,180,70,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 40px;
+    padding: 0 30px;
+  }
+}
+
+.progresContainer{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  .spinner{
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: rgba(227,113,57,1);
+    animation: spin 1s ease infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
