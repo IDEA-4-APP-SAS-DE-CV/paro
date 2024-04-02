@@ -49,7 +49,7 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const userId = searchParams.get('userId');
   const creditLine = searchParams.get('creditLine');
-  const cl = await CreditLine.find({ 'userId': userId, 'creditLine': creditLine });
+  const cl = await CreditLine.findOne({ 'userId': userId, 'creditLine': creditLine });
 
   if(!cl || cl.length === 0){
     return NextResponse.json({ message: 'No hay Linea de credito registrada con esos datos'},{
@@ -58,15 +58,15 @@ export async function GET(request) {
   }
 
   const newCreditLineDone = {
-    creditLine: cl[0].creditLine,
-    totalAmount: cl[0].totalAmount,
-    status: cl[0].status,
-    loans: cl[0].loans,
-    userId: cl[0].userId,
-    availableBalance: cl[0].availableBalance,
-    renewable: cl[0].renewable,
-    riskAnalysis: cl[0].riskAnalysis,
-    tna: cl[0].tna,
+    creditLine: cl.creditLine,
+    totalAmount: cl.totalAmount,
+    status: cl.status,
+    loans: cl.loans,
+    userId: cl.userId,
+    availableBalance: cl.availableBalance,
+    renewable: cl.renewable,
+    riskAnalysis: cl.riskAnalysis,
+    tna: cl.tna,
   }
 
   return NextResponse.json({ newCreditLineDone, message: 'Solicitud de credito Solicitada'})

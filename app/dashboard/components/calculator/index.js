@@ -2,12 +2,34 @@ import { useState } from 'react';
 import styles from './styles.module.css';
 
 export default function Calculator({applyLoan}){
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState('');
   const [over, setOver] = useState(false);
   const [next, setNext] = useState(false);
   const [options, setOptions] = useState(0);
   const maxAllowAmount = 1500;
-  const installments = [3, 6, 9, 12];
+  // const installments = [1, 3, 6, 9, 12];
+  const installments = [
+    {
+      months: 1,
+      available: true,
+    },
+    {
+      months: 3,
+      available: false,
+    },
+    {
+      months: 6,
+      available: false,
+    },
+    {
+      months: 9,
+      available: false,
+    },
+    {
+      months: 12,
+      available: false,
+    }
+  ]
   const amountWithInteres = amount * 1.10;
 
   const handleAmount = (value) => {
@@ -55,6 +77,7 @@ export default function Calculator({applyLoan}){
                 onChange={(e) => handleAmount(e.target.value)}
                 maxLength={7}
                 pattern="[0-9]{7}"
+                placeholder="0"
               />
             </div>
           </div>
@@ -65,14 +88,17 @@ export default function Calculator({applyLoan}){
         <div className={styles.bottom}>
           <div className={styles.options}>
             {
-              !over && next && installments.map((val, key) => {
-                return <div key={key} className={styles.option} onClick={() => setOptions(val)}>
+              !over && next && installments.map(({months, available}, key) => {
+                return <div key={key} className={styles.option} onClick={() => setOptions(months)}>
                   <div className={styles.switches}>
-                     <input className={styles.optionButton} name="option" type='radio' />
-                     <span>{val} pago de</span>
+                    {
+                      available && <input className={styles.optionButton} name="option" type='radio' /> 
+                        || <input disabled className={styles.optionButton} name="option" type='radio' />
+                    }
+                     <span className={!available && styles.disabled}>{months} pago de</span>
                   </div>
                   <div>
-                    <span>$ {(amountWithInteres / val).toFixed(2)}</span>
+                    <span className={!available && styles.disabled}> $ { available && (amountWithInteres / months).toFixed(2) || '---'}</span>
                   </div>
                 </div>
               })

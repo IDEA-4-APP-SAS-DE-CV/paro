@@ -6,8 +6,8 @@ import EmptyState from "./components/emptyState";
 import Credits from './components/credits'
 import Calculator from './components/calculator'
 import { delete_cookie, get_cookie } from '../../utils/cookies';
+import currency from '../../utils/currency';
 import { jwtDecode } from "jwt-decode";
-
 
 function Dashboard() {
   const [user, setUser] = useState(null);
@@ -83,6 +83,9 @@ function Dashboard() {
     }
   }
 
+  console.log({ user });
+  const firstLetter = user?.name.slice(0, 1);
+
   return <div className={styles.dashboard}>
     {
       activeCal && <Calculator applyLoan={applyLoan} />
@@ -90,11 +93,11 @@ function Dashboard() {
     <div className={styles.left}>
       <div className={styles.user}>
         <div className={styles.photo}>
-          <div className={styles.circle}>F</div>
+          <div className={styles.circle}>{firstLetter}</div>
         </div>
         <div className={styles.data}>
-          <div className={styles.name}>Fernando Robles</div>
-          <div className={styles.mail}>fernando.robles@gmail.comwewlek</div>
+          <div className={styles.name}>{user?.name} {user?.lastname}</div>
+          <div className={styles.mail}>{user?.mail}</div>
         </div>
       </div>
       <div className={styles.controls}>
@@ -135,13 +138,15 @@ function Dashboard() {
           />
         </div>
         <div className={styles.info}>
-        Tu <span className={styles.labels}>‘paro</span> al día de hoy puede ser de hasta: <span className={styles.labels}>$1,500.00</span>
+        Tu <span className={styles.labels}>‘paro</span> al día de hoy puede ser de hasta: <span className={styles.labels}>{
+          currency(creditInfo?.newCreditLineDone?.availableBalance)
+        }</span>
         </div>
       </div>
       <main className={styles.mainContent}>
         {
           creditInfo && <Credits creditInfo={creditInfo} /> ||
-            loader && <span className={styles.loader}></span> ||  <EmptyState buildLoan={buildLoan} setLoader={setLoader} />
+            loader && <span className={styles.loader}></span> || <EmptyState buildLoan={buildLoan} setLoader={setLoader} />
         }  
       </main>
     </div>

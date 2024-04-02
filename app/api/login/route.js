@@ -7,7 +7,9 @@ export async function POST(request) {
   connectDB();
   const body = await request.json();
   const { mail, password } = body;
-  const user = await User.find({mail: mail, password: password});
+  const user = await User.findOne({mail: mail, password: password});
+
+  console.log({ user });
 
   if(!user || user.length === 0){
     return NextResponse.json({ message: 'No Autorizado'},{
@@ -30,6 +32,7 @@ export async function POST(request) {
     addressFileURL: user.addressFileURL,
     accountStatusURL: user.accountStatusURL,
   }
+
 
   const token = jwt.sign(newUser, process.env.JWT_SECRET, {
     expiresIn: "24h",
