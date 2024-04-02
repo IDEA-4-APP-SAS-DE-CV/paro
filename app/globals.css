@@ -136,6 +136,10 @@ input:focus{
   border: 2px solid rgb(227,113,57);
 }
 
+.labels{
+  color: rgb(227,113,57);
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

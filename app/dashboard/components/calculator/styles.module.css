@@ -13,14 +13,14 @@
   .containerButtons{
     color: black;
     width: 450px;
-    height: 560px;
+    height: 600px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     position: relative;
     .top{
       width: 100%;
-      height: 50%;
+      height: 40%;
       .title{
         height: 100px;
         display: flex;
@@ -36,7 +36,7 @@
         align-items: center;
         font-size: 44px;
         font-weight: 300;
-        padding-top: 30px;
+        padding-top: 10px;
         .sign{
           font-size: 18px;
           margin-right: 10px;
@@ -72,7 +72,7 @@
     }
     .bottom{
       width: 100%;
-      height: 50%;
+      height: 60%;
       .options{
         height: 70%;
         .option{
@@ -103,4 +103,8 @@
       }
     }
   }
+}
+
+.disabled{
+  opacity: 0.3;
 }
