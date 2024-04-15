@@ -45,6 +45,7 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
+
   connectDB();
   const { searchParams } = new URL(request.url)
   const userId = searchParams.get('userId');

@@ -1,0 +1,65 @@
+.creditLinesList{
+  .contentList{
+    padding: 0 20px;
+  }
+  .head{
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    height: 66px;
+    background-color: rgba(0,0,0,0.04);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    .field{
+      margin: 0 20px;
+      .pLine{
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+      }
+      .pLine > span{
+        margin-right: 10px;
+      }
+      .sLine{
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+      }
+      .sLine > span{
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.select{
+  padding: 5px 10px;
+  height: 30px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+
+.wrapList{
+  border: 1px solid rgba(0,0,0,0.2);
+  margin-top: 10px;
+  .amountLoan{
+    background-color: rgba(0,0,0,0.1);
+    height: 70px;
+    margin-top: 0px;
+    display: flex;
+    padding: 5px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 18px;
+    font-weight: 600;
+    flex-direction: column;
+    .date{
+      font-size: 13px;
+      font-weight: 400;
+    }
+  }
+}
