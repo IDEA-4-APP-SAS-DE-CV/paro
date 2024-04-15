@@ -6,8 +6,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Paro",
   description: "¡Nosotros de hacemos el Paro!",
-  image: "https://www.paro.com.mx/images/logo_paro.png",
-
+  openGraph: {
+    images: ['https://www.paro.com.mx/images/logo_paro.png'],
+  },
 };
 
 export default function RootLayout({ children }) {
