@@ -3,7 +3,6 @@
 import { montserrat } from '../../../../ui/fonts';
 import { fetchLoansByUser, fetchUserById } from '../../../../lib/data';
 import { Chip } from "@nextui-org/react";
-import { CheckIcon } from "../../../components/icons/checkIcon";
 import { formatCurrency } from '../../../../lib/utils';
 import SwitchStatus from '../../../components/switchStatus';
 
@@ -67,7 +66,6 @@ export default async function Page({params}) {
                             <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                                 {
                                     loan.status === 'approved' && <Chip
-                                    startContent={<CheckIcon size={18} />}
                                     variant="faded"
                                     color="success"
                                   >
