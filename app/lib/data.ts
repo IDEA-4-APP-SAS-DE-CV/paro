@@ -1,13 +1,102 @@
 import { sql } from '@vercel/postgres';
-import {
-  CustomerField,
-  CustomersTableType,
-  InvoiceForm,
-  InvoicesTable,
-  LatestInvoiceRaw,
-  Revenue,
-} from './definitions';
-import { formatCurrency } from './utils';
+
+export async function fetchUsers() {
+  try {
+    const data = await sql`SELECT 
+      id,
+      name, 
+      lastname,
+      mail,
+      phone,
+      birth,
+      clabe,
+      role,
+      accountstatuslink,
+      addressfilelink,
+      inelink,
+      createdat
+    FROM users`;
+
+    // console.log('Data fetch completed after 3 seconds.');
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function fetchUserById(userId: string){
+
+  try {
+    const data = await sql`SELECT 
+      id,
+      name, 
+      lastname,
+      mail,
+      phone,
+      birth,
+      clabe,
+      role,
+      accountstatuslink,
+      addressfilelink,
+      inelink,
+      createdat
+    FROM users where id = ${userId}`;
+
+    // console.log('Data fetch completed after 3 seconds.');
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+
+export async function fetchLoansByUser(userId: string){
+  try {
+    const data = await sql`select 
+      loans.id AS loandId, creditline_id, name, avilableBalance, amount, loans.status, loans.createdat from users 
+      INNER JOIN 
+          creditLines ON users.id = creditlines.user_id
+      JOIN 
+          loans ON creditlines.id = loans.creditline_id
+      WHERE users.id = ${userId}`
+
+      return data.rows;
+  } catch(err){
+    console.error('Dataabase error:', err);
+    const data = {
+      message: 'EL usuario no cuenta con prestamos activos',
+      rows: [],
+    }
+
+    return data.rows;
+    // throw new Error('Failed to fetch loans');
+  }
+
+}
+
+/*
+export async function fetchLogin() {
+  try {
+    // Artificially delay a response for demo purposes.
+    // Don't do this in production :)
+
+    // console.log('Fetching revenue data...');
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    const data = await sql<Revenue>`SELECT * FROM users`;
+
+    // console.log('Data fetch completed after 3 seconds.');
+    
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
 
 export async function fetchRevenue() {
   try {
@@ -17,9 +106,10 @@ export async function fetchRevenue() {
     // console.log('Fetching revenue data...');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const data = await sql<Revenue>`SELECT * FROM revenue`;
+    const data = await sql<Revenue>`SELECT * FROM creditlines`;
 
     // console.log('Data fetch completed after 3 seconds.');
+    console.log(data.fields);
 
     return data.rows;
   } catch (error) {
@@ -31,11 +121,8 @@ export async function fetchRevenue() {
 export async function fetchLatestInvoices() {
   try {
     const data = await sql<LatestInvoiceRaw>`
-      SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
-      ORDER BY invoices.date DESC
-      LIMIT 5`;
+      SELECT * FROM users
+     `;
 
     const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
@@ -215,3 +302,4 @@ export async function fetchFilteredCustomers(query: string) {
     throw new Error('Failed to fetch customer table.');
   }
 }
+*/

@@ -1,13 +1,14 @@
-import { GlobeAltIcon } from '@heroicons/react/24/outline';
+
 import { montserrat } from '../ui/fonts';
+import Image from 'next/image';
+
 
 export default function AcmeLogo() {
   return (
     <div
       className={`${montserrat.className} flex flex-row items-center leading-none text-white`}
     >
-      <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" />
-      <p className="text-[44px]">Acme</p>
+      <Image src="/images/logo_paro.png" alt="Paro" width={200} height={100} />
     </div>
   );
 }
