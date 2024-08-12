@@ -6,12 +6,14 @@ import SimpleLayout from "../components/SimpleLayout";
 import styles from './login.module.css';
 import { get_cookie } from '../../utils/cookies';
 import { Input, Button } from "@nextui-org/react";
+import { stringify } from "querystring";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [user, setUser] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,16 +30,13 @@ export default function LoginPage() {
         })
       });
 
-      console.log({ response });
-
       if(!response.ok){
         setError("El usuario o la contraseña son incorrectos");
       } else{
-        const { token } = await response.json();
-        if(token){
-          router.push("/dash");
-        }
-          
+        const { newUser } = await response.json();
+        if(newUser){
+          router.push(`/inicio/${newUser.id}`);
+        } 
         setError("");
       }
     } catch(err){
@@ -67,7 +66,7 @@ export default function LoginPage() {
                 </div>
                 <div className={styles.bottom}>
                     <span className={styles.topText}>Bienvenido a Paro,</span>
-                    <span>la forma facil de obtener un préstamo</span>
+                    <span className="text-sky-400 font-medium">la forma facil de obtener un préstamo</span>
                 </div>
                 <div className={styles.circleButton}>
                 </div>
@@ -99,8 +98,9 @@ export default function LoginPage() {
                 <Button onClick={handleLogin} color="primary">Iniciar Sesión</Button>  
                 <br />
                 <br /> 
-                <p className={styles.textRegister}>Si no tienes una cuenta, registrate <Link className={styles.link} href="/registro">aquí</Link></p>
+                <p className={`${styles.textRegister} font-medium`}>Si no tienes una cuenta, registrate <Link className={`${styles.link} font-bold text-blue-500`} href="/registro">aquí</Link></p>
                 <br /> 
+                <div className={styles.error}>{error}</div>
             </div>
         </div>
       </div>

@@ -49,7 +49,17 @@ export async function fetchUserById(userId: string){
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch revenue data.');
+    throw new Error('Failed to fetch user data.');
+  }
+}
+
+export async function fetchCreditLine(userId: string){
+  try {
+    const data = await sql`select * from creditlines where user_id = ${userId}`
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    return [{}];
   }
 }
 

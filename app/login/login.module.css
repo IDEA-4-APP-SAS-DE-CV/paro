@@ -75,6 +75,7 @@
                     background: -webkit-linear-gradient(#ffae6c, #fa572e);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
+                    color: white;
                 }
             }
             .circleButton {
@@ -94,8 +95,8 @@
         }
         .right {
             width: 55%;
+            position: relative;
             height: 100%;
-            border: 1px solid red;
             padding: 120px 80px;
             display: flex;
             flex-direction: column;
@@ -109,9 +110,14 @@
             .textRegister {
                 font-size: 13px;
                 color: gray;
-                .link {
-                    color: #f5b220;
-                }
+            }
+            .error{
+                position: absolute;
+                bottom: 30px;
+                left: 50px;
+                color: red;
+                font-weight: 500;
+                font-size: 15px;
             }
         }
     }
