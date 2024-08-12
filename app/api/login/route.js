@@ -13,7 +13,6 @@ export async function POST(request) {
 
   const { rows } = await sql`SELECT * from users where mail=${mail} and password=${password}`;
 
-
   if(!rows || rows.length === 0){
     return NextResponse.json({ message: 'No Autorizado'},{
       status: 400,
@@ -22,32 +21,29 @@ export async function POST(request) {
 
   const user = rows[0];
   const newUser = {
-    id: user._id,
+    id: user.id,
     name: user.name,
     lastname: user.lastname,
-    motherLastname: user.motherLastname,
     birth: user.birth,
     clabe: user.clabe,
     mail: user.mail,
     phone: user.phone,
     role: user.role,
-    creditLine: user.creditLine,
-    ineURL: user.ineURL,
-    addressFileURL: user.addressFileURL,
-    accountStatusURL: user.accountStatusURL,
+    inelink: user.inelink,
+    addressfilelink: user.addressfilelink,
+    accountstatuslink: user.accountstatuslink,
   }
   
-  const token = jwt.sign(newUser, process.env.JWT_SECRET, {
-    expiresIn: "24h",
-    algorithm: "HS512",
-  });
+  // const token = jwt.sign(newUser, process.env.JWT_SECRET);
+
+  console.log({ newUser });
 
   cookies().set({
     name: 'user',
-    value: token,
+    value: JSON.stringify(newUser),
     httpOnly: true,
-    path: '/',
+    path: '/inicio',
   })
 
-  return NextResponse.json({ token, message: 'Usuario Logeado'})
+  return NextResponse.json({ newUser, message: 'Usuario Logeado'})
 }
