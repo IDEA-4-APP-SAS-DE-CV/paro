@@ -49,8 +49,6 @@ export default function LoginPage() {
     console.log({ userData });
   }, [user])
 
-  console.log({email, pass});
-
   return (
     <SimpleLayout>
       <div className={styles.login}>

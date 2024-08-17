@@ -13,6 +13,8 @@ export async function POST(request) {
 
   const { rows } = await sql`SELECT * from users where mail=${mail} and password=${password}`;
 
+  console.log({ rows });
+
   if(!rows || rows.length === 0){
     return NextResponse.json({ message: 'No Autorizado'},{
       status: 400,
