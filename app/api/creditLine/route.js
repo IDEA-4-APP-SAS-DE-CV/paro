@@ -4,11 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request) {
   const body = await request.json();
-  const { userId } = body;
+  const { userId, maxAmount, availableBalance, status,  } = body;
   const uid = uuidv4();
 
   const { rows } = await sql`insert into creditlines (
-    id, user_id, maxamount, avilablebalance, status,createdat ) 
+    id, user_id, maxamount, availableBalance, status, createdAt) 
   values (${uid}, )`;
 
 
