@@ -6,6 +6,7 @@ import {
  } from '@heroicons/react/24/outline';
 import EmptyState from '../../icons/EmptyState';
 import { formatCurrency } from '../../lib/utils';
+import DetailCredit from '../components/detailCredit';
   
 export default async function UserPage({ params }){
 
@@ -46,7 +47,7 @@ export default async function UserPage({ params }){
         <div className={styles.content}>
             {
                 creditLine && creditLine.length && 
-                <div>
+                <div className={styles.contentCredit}>
                     <div className={styles.head}>Header</div>
                     {
                         status === 'pending' &&  
@@ -59,7 +60,7 @@ export default async function UserPage({ params }){
                                 <p>Pero no te preocupes por que ya tienes un Paro de <b>{formatCurrency(availableBalance)}</b> </p>
                                 <p>y te notificaremos cuando esten en tu cuenta.</p>
                                 <EmptyState />  
-                            </div> || <div>Usuario con informacion</div>
+                            </div> || <DetailCredit />
                     }
                 </div> ||
                 <div className={styles.empty}>
@@ -67,6 +68,7 @@ export default async function UserPage({ params }){
                 <br />
                 <h1 className={styles.title}>Sin línea de crédito</h1>
                 <p>Aun no tenemos una línea de credito para ti..., ¿deseas solicitar un Paro?</p>
+                <p>Crear tu cuenta y tu linea de crédito inicial puede ser de hasta <b>$3,000</b></p>
                 <br /><br />
                 <Button color="primary">Solicitar un Paro</Button>  
                 <EmptyState />  

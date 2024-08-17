@@ -9,7 +9,7 @@ export async function POST(request) {
 
   const { rows } = await sql`insert into creditlines (
     id, user_id, maxamount, avilablebalance, status,createdat ) 
-  values ()`;
+  values (${uid}, )`;
 
 
   if(!rows || rows.length === 0){
