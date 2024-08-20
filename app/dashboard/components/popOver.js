@@ -19,8 +19,6 @@ const fetchLoans = async (e) => {
         })
         });
 
-        console.log({ response });
-
         if(!response.ok){
             setError("Errro al obtener los prestamos");
         } else{
@@ -37,8 +35,6 @@ const fetchLoans = async (e) => {
     useEffect(() => {
         fetchLoans();
     }, [])
-
-    console.log({ loans });
 
   return (
     <div className={styles.pop}>

@@ -13,8 +13,6 @@ export async function POST(request) {
 
   const { rows } = await sql`SELECT * from users where mail=${mail} and password=${password}`;
 
-  console.log({ rows });
-
   if(!rows || rows.length === 0){
     return NextResponse.json({ message: 'No Autorizado'},{
       status: 400,
@@ -37,8 +35,6 @@ export async function POST(request) {
   }
   
   // const token = jwt.sign(newUser, process.env.JWT_SECRET);
-
-  console.log({ newUser });
 
   cookies().set({
     name: 'user',

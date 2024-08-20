@@ -14,7 +14,6 @@ export async function POST(request) {
     WHERE users.id = ${userId}
 `;
 
-
   if(!rows || rows.length === 0){
     return NextResponse.json({ message: 'No Autorizado'},{
       status: 400,
@@ -26,12 +25,12 @@ export async function POST(request) {
 
 export async function PUT(request) {
   const body = await request.json();
-  const { loan } = body;
-  console.log({ loan });
-  console.log(`update loans set status = 'approved' where id = ${loan}`);
-  const { rows } = await sql`update loans set status = 'approved' where id = ${loan}`;
+  const { loan, creditLineId } = body;
 
-  if(rows || rows.length === 0){
+  const { rows } = await sql`update loans set status = 'approved' where id = ${loan}`;
+  const updateCL = await sql`update creditlines set status = 'approved' where id = ${creditLineId}`;
+
+  if(rows || rows.length !== 0){
     return NextResponse.json({ message: 'Prestamo actualizado'},{
       status: 200,
     });

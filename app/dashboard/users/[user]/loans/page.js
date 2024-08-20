@@ -9,17 +9,6 @@ import SwitchStatus from '../../../components/switchStatus';
 export default async function Page({params}) {
 
     const loans = await fetchLoansByUser(params.user);
-    const user = await fetchUserById(params.user);
-    
-    /*
-      loandid: 'd6e15727-9fd1-2347-8c5b-ea22a7bd33bb',
-      creditline_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-      name: 'Fernando',
-      avilablebalance: '5000',
-      amount: '3000',
-      createdat: '2024-07-13'
-      status: pending
-    */
     
     return <div className="w-full">
         <h1 className={`${montserrat.className} mb-8 text-xl md:text-2xl`}>
@@ -75,7 +64,7 @@ export default async function Page({params}) {
                                 }
                             </td>
                             <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                                <SwitchStatus loan={loan.loandid} status={loan.status} />
+                                <SwitchStatus loan={loan.loandid} status={loan.status} creditLineId={loan.creditline_id} />
                             </td>
                         </tr>
                     ))}

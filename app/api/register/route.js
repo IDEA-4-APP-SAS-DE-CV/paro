@@ -19,14 +19,6 @@ export async function POST(request) {
             password
         } = body;
 
-        console.log({
-            name,
-            lastname,
-            date,
-            mail,
-            password
-        });
-
         // Consulta SQL usando parámetros para evitar inyección SQL
         const result = await sql`
             INSERT INTO users (

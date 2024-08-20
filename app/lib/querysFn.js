@@ -11,7 +11,6 @@ export async function fetchLogin() {
     const data = await sql<Revenue>`SELECT * FROM users`;
 
     // console.log('Data fetch completed after 3 seconds.');
-    console.log({ data });
 
     return data.rows;
   } catch (error) {
