@@ -1,5 +1,5 @@
 'use client';
-import { Button, Image } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import styles from './simulador.module.css';
 import { useState } from "react";
 import { useFilePicker } from 'use-file-picker';
@@ -10,9 +10,10 @@ import {
     ImageDimensionsValidator,
   } from 'use-file-picker/validators';
 
-export default function Simulator ({ user }) {
+export default function Simulator ({ user, creditLine }) {
     const { inelink } = user;
     const [viewSimulator, setViewSimulator] = useState(false);
+    const [amount, setAmount] = useState(0);
     const [step, setStep] = useState(false);
 
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
@@ -37,10 +38,42 @@ export default function Simulator ({ user }) {
     }
 
     const handleCreditLine = () => {
-        setStep(true);
-        
+        setStep(true); 
     }
-    console.log({ loading, filesContent });
+    
+    const handleParo = async () => {
+        console.log({ amount, creditLine });
+        if(creditLine.length) {
+            // crea prestamo
+            console.log('Crea prestamo')
+        } else {
+
+            try {
+                const response = await fetch("/api/creditline", {
+                method: "POST",
+                headers: {
+                  "content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId: user[0]?.id,
+                    amount,
+                })
+              });
+
+            if(!response.ok){
+                console.log('No pudimos crear tu registro');
+              } else{
+                const { data } = await response.json();
+              }
+
+            } catch (error) {
+                console.log({ error });
+            }
+            // crea linea de credito y prestamo
+            
+        }
+    }
+
     return <div className={styles.simulator}>
         
         <Button color="primary" onClick={handleSimulate}>Solicitar un Paro</Button>  
@@ -75,11 +108,25 @@ export default function Simulator ({ user }) {
                                     }
                                 </div>
                             </div> ||
-                            <div> 
+                            <div className={styles.wraperSimulate}> 
                                 {
                                     //TODO: validar cuando la INE este cargada para mostrar este paso
                                     filesContent && filesContent.length && step &&
-                                    <div>simulador</div>
+                                    <div className={styles.simulate}>
+                                        <h2 className={styles.title}>Simula tu Paro</h2>
+                                        <input
+                                            type="text"
+                                            placeholder="$0"
+                                            onChange={(e) => setAmount(e.target.value)}
+                                            className={`${styles.inputAmount} "border-0 outline-none" `}
+
+                                        />
+                                        <p>Ingresa un monto entre $10 y $3,000</p>
+                                        <Button 
+                                            onClick={handleParo}
+                                            color="primary" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Solicitar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </Button>
+                                    </div>
                                 }    
                              </div>
                         }

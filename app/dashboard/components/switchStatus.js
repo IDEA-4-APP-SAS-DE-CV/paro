@@ -3,8 +3,7 @@ import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 
 
-export default function SwitchStatus({ loan, status }){
-    console.log({ status, loan });
+export default function SwitchStatus({ loan, status, creditLineId }){
 
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [size, setSize] = React.useState('md')
@@ -30,7 +29,8 @@ export default function SwitchStatus({ loan, status }){
                     "content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    loan
+                    loan,
+                    creditLineId,
                 })
             });
 

@@ -1,5 +1,5 @@
 import { Link, Button } from "@nextui-org/react";
-import { fetchCreditLine, fetchUserById } from '../../lib/data';
+import { fetchCreditLine, fetchUserById, fetchLoansByUser } from '../../lib/data';
 import styles from './user.module.css';
 import { 
     ArrowLeftEndOnRectangleIcon
@@ -12,6 +12,7 @@ import Simulator from "../components/simulator";
 export default async function UserPage({ params }){
     const user = await fetchUserById(params.user);
     const creditLine = await fetchCreditLine(params.user);
+    const loans = await fetchLoansByUser(params.user);
     let status = null;
     let availableBalance = 0;
     if(creditLine && creditLine.length) {
@@ -60,7 +61,7 @@ export default async function UserPage({ params }){
                                 <p>Pero no te preocupes por que ya tienes un Paro de <b>{formatCurrency(availableBalance)}</b> </p>
                                 <p>y te notificaremos cuando esten en tu cuenta.</p>
                                 <EmptyState />  
-                            </div> || <DetailCredit />
+                            </div> || <DetailCredit user={user} creditLine={creditLine} loans={loans} />
                     }
                 </div> ||
                 <div className={styles.empty}>
@@ -70,7 +71,7 @@ export default async function UserPage({ params }){
                 <p>Aun no tenemos una línea de credito para ti..., ¿deseas solicitar un Paro?</p>
                 <p>Crear tu cuenta y tu linea de crédito inicial puede ser de hasta <b>$3,000</b></p>
                 <br /><br />
-                <Simulator user={user} />
+                <Simulator user={user} creditLine={creditLine} />
                 <EmptyState />  
             </div>
             }

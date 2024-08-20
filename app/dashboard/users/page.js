@@ -7,8 +7,6 @@ import ActionButtons from '../components/actionButtons'
 export default async function UsersTable() {
   const users = await fetchUsers();
 
-  // const { id, name, lastname, mail, phone, birth, clabe, role, accountstatuslink, addressfilelink, inelink, createdat } = users;
-
   return (
     <div className="w-full">
       <h1 className={`${montserrat.className} mb-8 text-xl md:text-2xl`}>
