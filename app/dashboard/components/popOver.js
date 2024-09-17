@@ -10,7 +10,7 @@ const [loans, setLoans] = useState(null);
 const fetchLoans = async (e) => {
     try {
         const response = await fetch("/api/loans", {
-        method: "POST",
+        method: "GET",
         headers: {
             "content-Type": "application/json",
         },

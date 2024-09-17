@@ -3,6 +3,9 @@ import { Button, Input } from "@nextui-org/react";
 import styles from './simulador.module.css';
 import { useState } from "react";
 import { useFilePicker } from 'use-file-picker';
+import { useRouter } from 'next/navigation';
+import { formatCurrency } from '../../../lib/utils';
+
 import {
     FileAmountLimitValidator,
     FileTypeValidator,
@@ -11,7 +14,10 @@ import {
   } from 'use-file-picker/validators';
 
 export default function Simulator ({ user, creditLine }) {
-    const { inelink } = user;
+    
+    const router = useRouter();
+    const { inelink, id: userId } = user[0];
+    console.log({ user });
     const [viewSimulator, setViewSimulator] = useState(false);
     const [amount, setAmount] = useState(0);
     const [step, setStep] = useState(false);
@@ -45,7 +51,30 @@ export default function Simulator ({ user, creditLine }) {
         console.log({ amount, creditLine });
         if(creditLine.length) {
             // crea prestamo
-            console.log('Crea prestamo')
+            try {
+                const responseLoan = await fetch('/api/loans', {
+                    method: 'POST',
+                    header: {
+                        "content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        amount,
+                        creditLineId: creditLine[0].id,
+                        availableBalance: creditLine[0].avilablebalance - amount,
+                    })
+                });
+
+                if(!responseLoan.ok){
+                    console.log('No pudimos crear tu registro');
+                } else {
+                    const { data } = await responseLoan.json();
+                    console.log({ data });
+                    window.location.reload();
+                } 
+            } catch (err) {
+                console.log(`Error: ${err}`);
+            }
+           
         } else {
 
             try {
@@ -60,11 +89,11 @@ export default function Simulator ({ user, creditLine }) {
                 })
               });
 
-            if(!response.ok){
-                console.log('No pudimos crear tu registro');
-              } else{
-                const { data } = await response.json();
-              }
+                if(!response.ok){
+                    console.log('No pudimos crear tu registro');
+                 } else{
+                    const { data } = await response.json();
+                 }
 
             } catch (error) {
                 console.log({ error });
@@ -121,7 +150,7 @@ export default function Simulator ({ user, creditLine }) {
                                             className={`${styles.inputAmount} "border-0 outline-none" `}
 
                                         />
-                                        <p>Ingresa un monto entre $10 y $3,000</p>
+                                        <p>Ingresa un monto entre $10 y {formatCurrency(creditLine[0].avilablebalance)}</p>
                                         <Button 
                                             onClick={handleParo}
                                             color="primary" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Solicitar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

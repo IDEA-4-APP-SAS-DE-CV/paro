@@ -7,8 +7,7 @@ import SimpleLayout from "../components/SimpleLayout";
 import { get_cookie } from '../../utils/cookies';
 import {parseDate, getLocalTimeZone} from "@internationalized/date";
 import { Input, Button, DatePicker } from "@nextui-org/react";
-import {useDateFormatter} from "@react-aria/i18n";
-
+import Documents from './components/Documents';
 
 export default function RegisterPage () {
     const router = useRouter();
@@ -19,44 +18,61 @@ export default function RegisterPage () {
     const [pass, setPass] = useState("");
     const [user, setUser] = useState("");
     const [error, setError] = useState("");
+    const [viewDocuments, setViewDocuments] = useState(false);
+    const [file1, setFile1] = useState(null);
+    const [file2, setFile2] = useState(null);
+    const [file3, setFile3] = useState(null);
 
-    const handleRegister = async (e) => {
+
+
+    const handleRegister = (e) => {
         e.preventDefault();
+        setViewDocuments(true);
 
-        const body = {
-            name,
-            lastname,
-            date: `${date.year}-${date.month}-${date.day}`,
-            mail: email,
-            password: pass,
-        }
-        
-        try {
-          const response = await fetch("/api/register", {
-            method: "POST",
-            headers: {
-              "content-Type": "application/json",
-            },
-            body: JSON.stringify(body)
-          });
+        // sendRegister()
+    };
+
+    const sendRegister = async (f1, f2, f3) => {
+      const body = {
+        name,
+        lastname,
+        date: `${date.year}-${date.month}-${date.day}`,
+        mail: email,
+        password: pass,
+        file1: f1,
+        file2: f2,
+        file3: f3,
+    }
     
-          if(!response.ok){
-            setError("No pudimos crear tu registro!");
-          } else{
-            const { newUser } = await response.json();
-            if(newUser){
-              router.push(`/inicio/${newUser.id}`);
-            } 
-            setError("");
-          }
-        } catch(err){
-          console.log(`Error: ${err}`);
-        }
-      };
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(body)
+      });
+
+      if(!response.ok){
+        setError("No pudimos crear tu registro!");
+      } else{
+        const { newUser } = await response.json();
+        if(newUser){
+          router.push(`/inicio/${newUser.id}`);
+        } 
+        setError("");
+      }
+    } catch(err){
+      console.log(`Error: ${err}`);
+    }
+    }
 
 
     return <SimpleLayout>
-         <div className={styles.register}>
+        {
+          viewDocuments && <Documents sendRegister={sendRegister} />
+        }
+        <div className={styles.register}>
         <div className={styles.container}>
             <div className={styles.left}>
                 <div className={styles.top}>

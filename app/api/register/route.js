@@ -10,21 +10,26 @@ export async function POST(request) {
         const body = await request.json();
         const userId = uuidv4();
 
+        console.log({ body });
         // Desestructurar los campos necesarios del cuerpo
         const {
             name,
             lastname,
             date,
             mail,
-            password
+            password,
+            file1,
+            file2,
+            file3
         } = body;
 
         // Consulta SQL usando parámetros para evitar inyección SQL
+        let dateNow = new Date()
         const result = await sql`
             INSERT INTO users (
-                id, name, lastname, birth, clabe, password, mail, phone, role, inelink, addressfilelink, accountstatuslink
+                id, name, lastname, birth, clabe, password, mail, phone, role, inelink, addressfilelink, accountstatuslink, createdAt
             ) VALUES (
-                ${userId}, ${name}, ${lastname}, ${date}, '', ${password}, ${mail}, '', 'user', '', '', ''
+                ${userId}, ${name}, ${lastname}, ${date}, '', ${password}, ${mail}, '', 'user', ${file1}, ${file2}, ${file3}, ${dateNow}
             )
             ON CONFLICT (id) DO NOTHING
         `;

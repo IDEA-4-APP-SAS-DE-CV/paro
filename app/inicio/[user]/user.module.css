@@ -41,6 +41,9 @@
             background-color: white;
             border-radius: 10px;
             height: 60px;
+            padding: 5px 20px;
+            display: flex;
+            justify-content: space-between;
         }
         .empty  {
             height: calc( 100% - 70px);

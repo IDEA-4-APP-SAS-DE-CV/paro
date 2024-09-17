@@ -10,12 +10,13 @@ export async function POST(request) {
 
   try{
     let date = new Date()
+    const firstAvailableBalance = 3000 - amount;
 
     const rows  = await sql`insert into creditlines (
       id, user_id, maxamount, avilablebalance, status, createdAt) 
-    values (${uid}, ${userId}, 3000, 3000, 'pending', ${date})`;
+    values (${uid}, ${userId}, 3000, ${firstAvailableBalance}, 'pending', ${date})`;
   
-    
+
     const rowLoan = await sql`insert into loans (id, creditline_id, amount, status, createdAt) 
       values (${loanUid}, ${uid}, ${amount}, 'pending', ${date})`
 
