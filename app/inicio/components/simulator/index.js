@@ -14,10 +14,10 @@ import {
   } from 'use-file-picker/validators';
 
 export default function Simulator ({ user, creditLine }) {
+
+    console.log({ user, creditLine })
     
-    const router = useRouter();
-    const { inelink, id: userId } = user[0];
-    console.log({ user });
+    const {id: userId, accountstatuslink, addressfilelink, inelink } = user[0];
     const [viewSimulator, setViewSimulator] = useState(false);
     const [amount, setAmount] = useState(0);
     const [step, setStep] = useState(false);
@@ -110,37 +110,7 @@ export default function Simulator ({ user, creditLine }) {
             viewSimulator && <div className={styles.popSimulator}>
                     <div onClick={handleSimulate} className={styles.closer}>Cerrar</div>
                     <div className={styles.container}>
-                        {
-                            !inelink && !step &&
-                            <div className={styles.ineLink}>
-                                <h2><b>Para continuar necesitamos un documento</b></h2>
-                                <br />
-                                Necesitamos que nos compartas tu <b>INE</b> para poder continuar con el tramite y crear un alinea de crédito<br />
-                                <span className={styles.disclaimer}>
-                                    <b>Tamaño Maximo</b> 50mb, Ancho Max.: 2500px, Alto Max.: 2000px, Ancho Min.: 678px, Alto Min.: 600px, Formato .jpg
-                                </span>
-                                <div className={styles.containerIne}>
-                                    <div className={styles.wrapper}>
-                                    {
-                                        filesContent.map((file, index) => {
-                                           return  <div key={index}>
-                                              <img alt={file.name} src={file.content} width={400}></img>
-                                              <br />
-                                            </div>
-                                          })
-                                    }
-                                    </div>
-                                    <br />
-                                    {
-                                        filesContent && filesContent.length && <Button onClick={handleCreditLine} color="primary" >Aceptar</Button> ||
-                                        <Button color="primary" onClick={() => openFilePicker()}>Seleccionar archivo</Button>
-                                    }
-                                </div>
-                            </div> ||
                             <div className={styles.wraperSimulate}> 
-                                {
-                                    //TODO: validar cuando la INE este cargada para mostrar este paso
-                                    filesContent && filesContent.length && step &&
                                     <div className={styles.simulate}>
                                         <h2 className={styles.title}>Simula tu Paro</h2>
                                         <input
@@ -150,15 +120,17 @@ export default function Simulator ({ user, creditLine }) {
                                             className={`${styles.inputAmount} "border-0 outline-none" `}
 
                                         />
-                                        <p>Ingresa un monto entre $10 y {formatCurrency(creditLine[0].avilablebalance)}</p>
+                                        {
+                                            creditLine && creditLine.length && <p>Ingresa un monto entre $10 y {formatCurrency(creditLine[0].avilablebalance)}</p>
+                                            ||  <p>Ingresa un monto entre $10 y $3,000</p>
+                                        }
+                                        
                                         <Button 
                                             onClick={handleParo}
                                             color="primary" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Solicitar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         </Button>
                                     </div>
-                                }    
                              </div>
-                        }
                     </div>
             </div>
         }
